@@ -4,11 +4,12 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js",
+    "start": "node -r dotenv/config index.js",
     "deploy": "node deploy-commands.js"
   },
   "dependencies": {
     "discord.js": "^14.11.0",
+    "dotenv": "^16.3.1",
     "googleapis": "^127.0.0",
     "node-fetch": "^3.3.2"
   }

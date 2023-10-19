@@ -28,12 +28,14 @@ module.exports = {
         const getRows = await googleSheets.spreadsheets.values.get({
             auth,
             spreadsheetId,
-            range: "GPQ Scores!1:6"
+            range: "GPQ Scores!1:10"
         });
-
+        
         const nameIndex = getRows.data.values[0].findIndex(element => {
             return element.toLowerCase() === ign.toLowerCase();
         });
+        
+        // console.log('data row:', getRows.data.values);
 
         if (nameIndex === -1) {
             await interaction.reply({ content: 'Unable to find the character! Please make sure they are in the guild!', ephemeral: true });
@@ -46,8 +48,12 @@ module.exports = {
         const className = getRows.data.values[1][nameIndex];
         const lastWeekScore = getRows.data.values[2][nameIndex];
         const currentWeekScore = getRows.data.values[3][nameIndex];
-        const personalBest = getRows.data.values[4][nameIndex];
-        const lastVsBest = getRows.data.values[5][nameIndex];
+        const lastWeekChange = getRows.data.values[4][nameIndex];
+        const weeklyRanking = getRows.data.values[5][nameIndex];
+        const personalBest = getRows.data.values[6][nameIndex];
+        const lastVsBest = getRows.data.values[7][nameIndex];
+        const activeWeeks = getRows.data.values[8][nameIndex];
+        const participation = getRows.data.values[9][nameIndex];
 
         const embed = new EmbedBuilder()
             .setColor(0x0099FF)
@@ -56,13 +62,23 @@ module.exports = {
             .setAuthor({ name: `${ign.toUpperCase()} Culvert Stats`, iconURL: imgUrl })
             .setDescription(`Class: ${className} `)
             .addFields([
+                { name: 'Weekly Rank', value: weeklyRanking},
+                { name: '\u200B', value: '\u200B' },
+            ])
+            .addFields([
                 { name: 'Last Week Score', value: lastWeekScore, inline: true },
                 { name: 'Current Week Score', value: currentWeekScore, inline: true },
+                { name: 'Change Compared To Last Week', value: lastWeekChange, inline: true },
             ])
             .addFields([
                 { name: '\u200B', value: '\u200B' },
                 { name: 'Personal Best', value: personalBest, inline: true },
                 { name: 'Last vs Best', value: lastVsBest, inline: true },
+            ])
+            .addFields([
+                { name: '\u200B', value: '\u200B' },
+                { name: 'Active Weeks', value: activeWeeks, inline: true },
+                { name: 'Participation Rate', value: participation, inline: true },
             ])
             .setTimestamp()
             // .setImage(imgUrl)

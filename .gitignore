@@ -32,3 +32,4 @@ client/dist
 docker-compose.yaml
 config.json
 credentials.json
+.env
