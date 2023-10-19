@@ -1,7 +1,7 @@
 const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
 const { google } = require('googleapis');
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
-const { setTimeout } = require('node:timers/promises');
+// const { setTimeout } = require('node:timers/promises');
 
 
 module.exports = {
@@ -24,16 +24,12 @@ module.exports = {
         const client = await auth.getClient();
 
         const googleSheets = google.sheets({ version: "v4", auth: client });
-        // const spreadsheetId = '1HgS7_l-nToaSZ0sATKay32Eh90BTF5E26HbToFa2-Yk';
         const spreadsheetId = '10l__Q8YK5CIl256YaRVDYjDHvd08RJbdef52LxdnF7s';
-
         const getRows = await googleSheets.spreadsheets.values.get({
             auth,
             spreadsheetId,
             range: "GPQ Scores!1:6"
         });
-
-        // console.log('getRows: ', getRows.data);
 
         const nameIndex = getRows.data.values[0].findIndex(element => {
             return element.toLowerCase() === ign.toLowerCase();
@@ -53,8 +49,6 @@ module.exports = {
         const personalBest = getRows.data.values[4][nameIndex];
         const lastVsBest = getRows.data.values[5][nameIndex];
 
-        console.log('imgUrl: ', imgUrl);
-
         const embed = new EmbedBuilder()
             .setColor(0x0099FF)
             .setTitle(`${ign.toUpperCase()}`)
@@ -70,9 +64,9 @@ module.exports = {
                 { name: 'Personal Best', value: personalBest, inline: true },
                 { name: 'Last vs Best', value: lastVsBest, inline: true },
             ])
-            .setImage(imgUrl)
-            .setThumbnail(imgUrl)
             .setTimestamp()
+            // .setImage(imgUrl)
+            // .setThumbnail(imgUrl)
         // .setFooter({ text: 'Some footer text here', iconURL: 'https://i.imgur.com/AfFp7pu.png' });
 
         await interaction.reply({ embeds: [embed] });
