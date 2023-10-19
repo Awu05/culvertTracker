@@ -1,0 +1,10 @@
+version: '3.5'
+services:
+    hmuto:
+        build: .
+        restart: always
+        container_name: hmuto-bot
+        environment:
+          "TOKEN": "<BOT_TOKEN>"
+          "CLIENT_ID": "<BOT_CLIENT_ID"
+          "GUILD_ID": "<SERVER_ID>"
