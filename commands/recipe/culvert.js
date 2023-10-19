@@ -44,7 +44,7 @@ module.exports = {
         const response = await fetch(`https://maplestory.nexon.net/api/ranking?id=world&id2=45&character_name=${ign}&page_index=1`);
         const data = await response.json();
 
-        const imgUrl = data[0]["CharacterImgUrl"];
+        const imgUrl = data.length > 0 ? data[0]["CharacterImgUrl"] : null;
         const className = getRows.data.values[1][nameIndex];
         const lastWeekScore = getRows.data.values[2][nameIndex];
         const currentWeekScore = getRows.data.values[3][nameIndex];

@@ -1,9 +1,9 @@
 version: '3.5'
 services:
-    hmuto:
+    culverttracker:
         build: .
         restart: always
-        container_name: hmuto-bot
+        container_name: culvert-tracker
         environment:
           "TOKEN": "<BOT_TOKEN>"
           "CLIENT_ID": "<BOT_CLIENT_ID"

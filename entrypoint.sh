@@ -1,1 +1,1 @@
-yarn deploy && yarn start
+yarn deploy && yarn prod
