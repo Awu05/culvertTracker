@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node --env-file=.env index.js",
     "prod": "node index.js",
+    "deploy-local": "node --env-file=.env deploy-commands.js",
     "deploy": "node deploy-commands.js"
   },
   "dependencies": {
