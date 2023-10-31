@@ -6,7 +6,7 @@ const QuickChart = require('quickchart-js');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('gpqstats')
+        .setName('gpqhistory')
         .setDescription('Fetches the culvert stats of a character.')
         .addStringOption(option =>
             option.setName('ign')
