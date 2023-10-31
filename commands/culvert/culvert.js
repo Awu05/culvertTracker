@@ -6,7 +6,7 @@ const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fet
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('culvert')
+        .setName('gpq')
         .setDescription('Fetches the culvert stats of someone in the guild.')
         .addStringOption(option =>
             option.setName('ign')
@@ -58,8 +58,9 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setColor(0x0099FF)
             .setTitle(`${ign.toUpperCase()}`)
+            .setThumbnail(imgUrl.replace('https://', 'http://'))
             .setURL(`https://mapleranks.com/u/${ign}`)
-            .setAuthor({ name: `${ign.toUpperCase()} Culvert Stats`, iconURL: imgUrl })
+            .setAuthor({ name: `${ign.toUpperCase()} Culvert Stats` })
             .setDescription(`Class: ${className} `)
             .addFields([
                 { name: 'Weekly Rank', value: weeklyRanking},
@@ -73,7 +74,7 @@ module.exports = {
             .addFields([
                 { name: '\u200B', value: '\u200B' },
                 { name: 'Personal Best', value: personalBest, inline: true },
-                { name: 'Last vs Best', value: lastVsBest, inline: true },
+                { name: 'Current vs Best', value: lastVsBest, inline: true },
             ])
             .addFields([
                 { name: '\u200B', value: '\u200B' },
@@ -81,8 +82,7 @@ module.exports = {
                 { name: 'Participation Rate', value: participation, inline: true },
             ])
             .setTimestamp()
-            // .setImage(imgUrl)
-            // .setThumbnail(imgUrl)
+            
         // .setFooter({ text: 'Some footer text here', iconURL: 'https://i.imgur.com/AfFp7pu.png' });
 
         await interaction.reply({ embeds: [embed] });

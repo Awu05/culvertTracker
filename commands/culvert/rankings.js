@@ -3,7 +3,7 @@ const { google } = require('googleapis');
 
 module.exports = {
     data: new SlashCommandBuilder()
-        .setName('culvertrankings')
+        .setName('gpqrankings')
         .setDescription('Fetches the culvert scores of the guild.')
         .addStringOption(option =>
             option.setName('top')
