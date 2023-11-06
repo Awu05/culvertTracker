@@ -18,7 +18,7 @@ module.exports = {
         const client = await auth.getClient();
 
         const googleSheets = google.sheets({ version: "v4", auth: client });
-        const spreadsheetId = '10l__Q8YK5CIl256YaRVDYjDHvd08RJbdef52LxdnF7s';
+        const spreadsheetId = process.env.SHEET_ID;
         const getRows = await googleSheets.spreadsheets.values.get({
             auth,
             spreadsheetId,
