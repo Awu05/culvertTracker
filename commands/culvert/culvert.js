@@ -46,7 +46,7 @@ module.exports = {
 
         const imgUrl = data.length > 0 ? data[0]["CharacterImgUrl"] : null;
         const className = getRows.data.values[1][nameIndex];
-        const lastWeekScore = getRows.data.values[2][nameIndex];
+        const lastWeekScore = getRows.data.values[2][nameIndex] ? getRows.data.values[2][nameIndex] : 'N/A';
         const currentWeekScore = getRows.data.values[3][nameIndex];
         const lastWeekChange = getRows.data.values[4][nameIndex];
         const weeklyRanking = getRows.data.values[5][nameIndex];
