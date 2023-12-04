@@ -70,6 +70,14 @@ module.exports = {
                         },
                     },
                 },
+                layout: {
+                    padding: {
+                        left: 0,
+                        right: 40,
+                        top: 0,
+                        bottom: 0
+                    }
+                }
             },
         });
 

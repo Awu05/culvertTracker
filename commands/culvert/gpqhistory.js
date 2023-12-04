@@ -12,9 +12,18 @@ module.exports = {
             option.setName('ign')
                 .setDescription('IGN of character you want to get the GPQ stats of.')
                 .setRequired(true))
+        .addStringOption(option =>
+            option.setName('fullhistory')
+                .setDescription('View full history.')
+                .addChoices(
+                    { name: 'True', value: 'true' },
+                    { name: 'False', value: 'false' },
+                )
+                .setRequired(false))
     ,
     async execute(interaction) {
         const ign = interaction.options.getString('ign');
+        const fullHistory = interaction.options.getString('fullhistory') ? true : false;
 
         const auth = new google.auth.GoogleAuth({
             keyFile: "credentials.json",
@@ -58,14 +67,25 @@ module.exports = {
             chart.setHeight(300);
             chart.setVersion('2.9.4');
 
+            let last5Dates;
+            let last5Scores;
+
+            if(fullHistory) {
+                last5Dates = chartDates.slice(0, scoreArray.length);
+                last5Scores = scoreArray;
+            } else {
+                last5Dates = scoreArray.length > 5 ? chartDates.slice(scoreArray.length-5, scoreArray.length) : chartDates.slice(0, scoreArray.length);
+                last5Scores = scoreArray.length > 5 ? scoreArray.slice(scoreArray.length-5, scoreArray.length) : scoreArray;
+            }
+
             chart.setConfig({
                 type: 'line',
                 data: {
-                    labels: chartDates.slice(0, scoreArray.length),
+                    labels: last5Dates,
                     datasets: [
                         {
                             label: `${ign.toUpperCase()} Weekly GPQ Scores`,
-                            data: scoreArray,
+                            data: last5Scores,
                             fill: false,
                             borderColor: 'blue',
                         },
@@ -86,11 +106,19 @@ module.exports = {
                             },
                         },
                     },
+                    layout: {
+                        padding: {
+                            left: 0,
+                            right: 40,
+                            top: 0,
+                            bottom: 0
+                        }
+                    }
                 },
             });
+            chart.setWidth(600);
 
             const imgUrl = chart.getUrl();
-
             const embed = new EmbedBuilder()
                 .setColor(0x0099FF)
                 .setTitle(`${ign.toUpperCase()} Weekly GPQ Scores`)
