@@ -55,7 +55,17 @@ module.exports = {
 
             const charInfo = getColumns.data.values[charIndex];
             const scoreArray = charInfo.slice(11, charInfo.length);
-            const chartDates = getColumns.data.values[0].slice(11, charInfo.length);
+
+            //Get the Sunday of each week
+            var curr = new Date; // get current date
+            var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+            var firstday = new Date(curr.setDate(first)).toISOString();
+            const date = new Date(firstday);
+            const dateFormat = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+
+            //Finds the index of the sunday
+            const dateInex = getColumns.data.values[0].indexOf(dateFormat);
+            const chartDates = getColumns.data.values[0].slice(11, dateInex);
 
             scoreArray.forEach((el, index) => {
                 scoreArray[index] = parseInt(el.replace(/,/g, ''), 10);
@@ -70,12 +80,12 @@ module.exports = {
             let last5Dates;
             let last5Scores;
 
-            if(fullHistory) {
+            if (fullHistory) {
                 last5Dates = chartDates.slice(0, scoreArray.length);
                 last5Scores = scoreArray;
             } else {
-                last5Dates = scoreArray.length > 5 ? chartDates.slice(scoreArray.length-5, scoreArray.length) : chartDates.slice(0, scoreArray.length);
-                last5Scores = scoreArray.length > 5 ? scoreArray.slice(scoreArray.length-5, scoreArray.length) : scoreArray;
+                last5Dates = scoreArray.length > 5 ? chartDates.slice(scoreArray.length - 5, scoreArray.length) : chartDates.slice(0, scoreArray.length);
+                last5Scores = scoreArray.length > 5 ? scoreArray.slice(scoreArray.length - 5, scoreArray.length) : scoreArray;
             }
 
             chart.setConfig({

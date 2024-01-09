@@ -58,7 +58,7 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setColor(0x0099FF)
             .setTitle(`${ign.toUpperCase()}`)
-            .setThumbnail(imgUrl.replace('https://', 'http://'))
+            .setThumbnail(imgUrl !== null? imgUrl.replace('https://', 'http://') : null)
             .setURL(`https://mapleranks.com/u/${ign}`)
             .setAuthor({ name: `${ign.toUpperCase()} Culvert Stats` })
             .setDescription(`Class: ${className} `)
