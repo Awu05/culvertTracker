@@ -28,11 +28,17 @@ module.exports = {
             range: "GPQ Scores!1:10"
         });
 
-        const rankingIndex = [];
+        let rankingIndex = [];
         let rankingFields = [];
 
-        for (let i = 1; i <= topNumber; i++) {
-            rankingIndex.push(getRows.data.values[5].indexOf(`${i}`));
+        for (let index = 1; index <= topNumber; index++) {
+            const indexes = getRows.data.values[5].reduce(function(a, e, i) {
+                if (e === `${index}`)
+                    a.push(i);
+                return a;
+            }, []);
+
+            rankingIndex = rankingIndex.concat(indexes);
         }
 
         for (let j = 0; j < rankingIndex.length; j++) {
@@ -40,7 +46,7 @@ module.exports = {
             const className = getRows.data.values[1][rankingIndex[j]];
             const currentWeekScore = getRows.data.values[3][rankingIndex[j]];
 
-            rankingFields.push({ name: 'Rank', value: `${j + 1}` });
+            rankingFields.push({ name: 'Rank', value: `${getRows.data.values[5][rankingIndex[j]]}` });
             rankingFields.push({ name: 'Character Name', value: ign, inline: true });
             rankingFields.push({ name: 'Class Name', value: className, inline: true });
             rankingFields.push({ name: 'Current Week Score', value: currentWeekScore, inline: true });
