@@ -28,10 +28,19 @@ module.exports = {
         const chartLablels = [];
         const chartData = [];
 
-        for(let i = 1; i < getRows.data.values.length; i++){
-            if(getRows.data.values[i][1] !== '0'){
-                chartLablels.push(getRows.data.values[i][0]);
-                chartData.push(parseInt(getRows.data.values[i][1].replace(/,/g, ''), 10));
+        for (let i = 1; i < getRows.data.values.length; i++) {
+            if (getRows.data.values[i][1] !== '0') {
+                try {
+                    const score = parseInt(getRows.data.values[i][1].replace(/,/g, ''), 10);
+                    if (score !== undefined || score !== 'undefined') {
+                        chartLablels.push(getRows.data.values[i][0]);
+                        console.log('score: ', getRows.data.values[i][1]);
+                        chartData.push(score);
+                    }
+                } catch (e) {
+                    console.log('error: ', e);
+                    break;
+                }
             }
         }
 
