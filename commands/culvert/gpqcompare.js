@@ -57,28 +57,27 @@ module.exports = {
             const dateFormat = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
 
             //Finds the index of the sunday
-            const dateInex = getColumns.data.values[0].indexOf(dateFormat);
+            const dateIndex = getColumns.data.values[0].indexOf(dateFormat);
 
             for (let k = 0; k < charIndexArray.length; k++) {
                 const charInfo = getColumns.data.values[charIndexArray[k]];
-                // const scoreArray = charInfo.slice(11, charInfo.length);
-                const scoreArray = charInfo.slice(11, dateInex);
-                
-                scoreArray.forEach((el, index) => {
-                    scoreArray[index] = parseInt(el.replace(/,/g, ''), 10);
+                const scoreArray = charInfo.slice(11, dateIndex);
+                const startArray = scoreArray.length >= 10 ? scoreArray.slice(scoreArray.length - 10, scoreArray.length) : scoreArray;
+
+                startArray.forEach((el, index) => {
+                    startArray[index] = parseInt(el.replace(/,/g, ''), 10);
                 });
 
                 chartData.push({
                     label: `${charInfo[0].toUpperCase()}`,
-                    data: scoreArray,
+                    data: startArray,
                     fill: false,
                     borderColor: `#${Math.floor(Math.random() * 16777215).toString(16)}`,
                 });
             }
 
-             
-            const chartDates = getColumns.data.values[0].slice(11, dateInex);
-            // const chartDates = getColumns.data.values[0].slice(11, getColumns.data.values[charIndexArray[0]].length);
+
+            const chartDates = getColumns.data.values[0].slice(dateIndex - 10, dateIndex);
 
             const chart = new QuickChart();
             chart.setWidth(500)

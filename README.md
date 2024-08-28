@@ -2,9 +2,6 @@
 
 A Maplestroy discord bot to help display the stats from Culvert (GPQ).
 
-
-
-
 ## Description
 
 This bot was mainly intented to be used in Maplestory and is centered around pulling data entered on a Google Excel sheet.
@@ -21,10 +18,18 @@ It is primarily used to display information from a Google excel sheet in a neat 
 
 * Clone the repo `git clone https://github.com/Awu05/culvertTracker.git`
 * Go into the repo you just cloned `cd culvertTracker`
-* You will have to make a copy of the Google Excel Sheet (Link TBA).
+* You will have to make a copy of the Google Excel Sheet (<https://docs.google.com/spreadsheets/d/19APFeuAaFesvaY35KMWDkf-CYFSqVX187UF_bfQOGpA/edit?usp=sharing>).
 * Modify the docker-compose2.yaml file and fill in the missing fields: "TOKEN", "CLIENT_ID" and "SHEET_ID". You will also need to rename the docker-compose2.yaml file to `docker-compose.yaml`
   * You can find the token and client_id by creating a discord developer account and then creating a new bot.
   * The Google Excel Sheet ID can be found in the url. For example: `https://docs.google.com/spreadsheets/d/SHEET_ID/edit#gid=0`
-* You will need to get your own google sheets api credentials in order for this to work. https://developers.google.com/sheets/api/quickstart/go
+* You will need to get your own google sheets api credentials in order for this to work. <https://developers.google.com/sheets/api/quickstart/go>
   * Once you have it, you will need to rename it to `credentials.json` and put it into the root of the foler.
 * Once you have updated the docker-compose file, you can run the docker-compose with `docker-compose up -d` to start the docker container.
+
+### Commands
+
+* `/gpq` will fetch the culvert stats of a character.
+* `/gpqcompare` will fetch the culvert scores between 2 characters (will only fetch the last 10 data points).
+* `/gpqhistory` will fetch the culvert history of the character. There is an optional field to get the full history (only up to last 20 data points).
+* `/gpqprog` will fetch the combined culvert score of the guild.
+* `/gpqrankings` will fetch the top x spots on the list (i.e top 5 or top 10 culvert scores).

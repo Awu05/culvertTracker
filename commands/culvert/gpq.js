@@ -30,21 +30,21 @@ module.exports = {
             spreadsheetId,
             range: "GPQ Scores!1:10"
         });
-        
+
         const nameIndex = getRows.data.values[0].findIndex(element => {
             return element.toLowerCase() === ign.toLowerCase();
         });
-        
+
         // console.log('data row:', getRows.data.values);
 
         if (nameIndex === -1) {
             await interaction.reply({ content: 'Unable to find the character! Please make sure they are in the guild!', ephemeral: true });
         }
 
-        const response = await fetch(`https://maplestory.nexon.net/api/ranking?id=world&id2=45&character_name=${ign}&page_index=1`);
+        const response = await fetch(`https://www.nexon.com/api/maplestory/no-auth/v1/ranking/na?type=overall&id=weekly&reboot_index=0&page_index=1&character_name=${ign}`);
         const data = await response.json();
 
-        const imgUrl = data.length > 0 ? data[0]["CharacterImgUrl"] : null;
+        const imgUrl = data !== null ? data["ranks"][0]["characterImgURL"] : null;
         const className = getRows.data.values[1][nameIndex];
         const lastWeekScore = getRows.data.values[2][nameIndex] ? getRows.data.values[2][nameIndex] : 'N/A';
         const currentWeekScore = getRows.data.values[3][nameIndex];
@@ -58,12 +58,12 @@ module.exports = {
         const embed = new EmbedBuilder()
             .setColor(0x0099FF)
             .setTitle(`${ign.toUpperCase()}`)
-            .setThumbnail(imgUrl !== null? imgUrl.replace('https://', 'http://') : null)
+            .setThumbnail(imgUrl !== null ? imgUrl.replace('https://', 'http://') : null)
             .setURL(`https://mapleranks.com/u/${ign}`)
             .setAuthor({ name: `${ign.toUpperCase()} Culvert Stats` })
             .setDescription(`Class: ${className} `)
             .addFields([
-                { name: 'Weekly Rank', value: weeklyRanking},
+                { name: 'Weekly Rank', value: weeklyRanking },
                 { name: '\u200B', value: '\u200B' },
             ])
             .addFields([
@@ -82,7 +82,7 @@ module.exports = {
                 { name: 'Participation Rate', value: participation, inline: true },
             ])
             .setTimestamp()
-            
+
         // .setFooter({ text: 'Some footer text here', iconURL: 'https://i.imgur.com/AfFp7pu.png' });
 
         await interaction.reply({ embeds: [embed] });
