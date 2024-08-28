@@ -81,8 +81,11 @@ module.exports = {
             let last5Scores;
 
             if (fullHistory) {
-                last5Dates = chartDates.slice(0, scoreArray.length);
-                last5Scores = scoreArray;
+                // last5Dates = chartDates.slice(0, scoreArray.length);
+                //Will only show last 20 entry points as discord only allows up to so many chars in a url
+                const startLength = scoreArray.length >= 20 ? scoreArray.length - 20 : 0;
+                last5Dates = chartDates.slice(startLength, scoreArray.length);
+                last5Scores = scoreArray.slice(startLength, scoreArray.length);
             } else {
                 last5Dates = scoreArray.length > 5 ? chartDates.slice(scoreArray.length - 5, scoreArray.length) : chartDates.slice(0, scoreArray.length);
                 last5Scores = scoreArray.length > 5 ? scoreArray.slice(scoreArray.length - 5, scoreArray.length) : scoreArray;

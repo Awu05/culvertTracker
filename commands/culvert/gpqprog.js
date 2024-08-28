@@ -27,14 +27,14 @@ module.exports = {
 
         const chartLablels = [];
         const chartData = [];
+        const startLength = getRows.data.values.length >= 20 ? getRows.data.values.length - 20 : 0;
 
-        for (let i = 1; i < getRows.data.values.length; i++) {
+        for (let i = startLength; i < getRows.data.values.length; i++) {
             if (getRows.data.values[i][1] !== '0') {
                 try {
                     const score = parseInt(getRows.data.values[i][1].replace(/,/g, ''), 10);
                     if (score !== undefined || score !== 'undefined') {
                         chartLablels.push(getRows.data.values[i][0]);
-                        console.log('score: ', getRows.data.values[i][1]);
                         chartData.push(score);
                     }
                 } catch (e) {
